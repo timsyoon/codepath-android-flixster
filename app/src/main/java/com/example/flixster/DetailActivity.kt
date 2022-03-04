@@ -20,6 +20,7 @@ class DetailActivity : YouTubeBaseActivity() {
 
     private lateinit var tvTitle: TextView
     private lateinit var tvOverview: TextView
+    private lateinit var tvPopularity: TextView
     private lateinit var ratingBar: RatingBar
     private lateinit var ytPlayerView: YouTubePlayerView
 
@@ -28,14 +29,16 @@ class DetailActivity : YouTubeBaseActivity() {
         setContentView(R.layout.activity_detail)
         tvTitle = findViewById(R.id.tvTitle)
         tvOverview = findViewById(R.id.tvOverview)
+        tvPopularity = findViewById(R.id.tvPopularity)
         ratingBar = findViewById(R.id.rbVoteAverage)
         ytPlayerView = findViewById(R.id.player)
 
         val movie = intent.getParcelableExtra<Movie>(MOVIE_EXTRA) as Movie
+        val popularityLabelAndValue = "Popularity: " + movie.popularity.toString()
         Log.i(TAG, "Movie is $movie")
         tvTitle.text = movie.title
         tvOverview.text = movie.overview
-        // TODO: get rating of movie
+        tvPopularity.text = popularityLabelAndValue
         ratingBar.rating = movie.voteAverage.toFloat()
 
         val client = AsyncHttpClient()
@@ -57,7 +60,6 @@ class DetailActivity : YouTubeBaseActivity() {
                 // Play youtube video with this trailer
                 initializeYoutube(youtubeKey)
             }
-
         })
     }
 
